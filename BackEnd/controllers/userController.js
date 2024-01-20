@@ -2,7 +2,7 @@ const User = require("../models/User");
 
 exports.createUser = async (req, res) => {
   try {
-    const newUser = Tour.create(req.body);
+    const newUser = await User.create(req.body);
     res.status(201).json({
       status: "success",
       data: {
@@ -54,7 +54,8 @@ exports.deleteUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findOne(req.params.id);
+    // console.log(req.params);
+    const user = await User.findById(req.params.id);
     return res.status(200).json({
       status: "success",
       data: {

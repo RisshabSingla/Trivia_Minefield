@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema(
       required: [true, "A password is required"],
       minLength: 8,
     },
-    gender: { type: String, required: true },
+    gender: {
+      type: String,
+      required: [true, "A gender is required for an user"],
+      enum: ["male", "female", "non-binary"],
+    },
     createdQuizes: [
       {
         type: mongoose.Schema.ObjectId,
