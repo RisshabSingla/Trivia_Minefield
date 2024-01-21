@@ -55,3 +55,34 @@ exports.login = async (req, res, next) => {
     });
   }
 };
+
+exports.protect = async (req, res, next) => {
+  try {
+    // console.log(req.headers);
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+    // console.log(token);
+    if (!token) {
+      return next(new Error("Not logged In"));
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const freshUser = await User.findById(decoded.id);
+    console.log(freshUser);
+
+    if (!freshUser) {
+      return next(new Error("User doesn't exist"));
+    }
+    req.user = freshUser;
+    next();
+  } catch (err) {
+    res.status(401).json({
+      status: "failed",
+      error: err,
+    });
+  }
+};
