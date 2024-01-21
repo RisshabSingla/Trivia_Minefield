@@ -20,6 +20,16 @@ const questionSchema = new mongoose.Schema({
   },
   explanation: { type: String },
   createdAt: { type: Date, default: Date.now() },
+  quizId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Quiz",
+    required: [true, "A question must belong to some quiz"],
+  },
+  createdBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: [true, "A question must be created by someone"],
+  },
 });
 
 questionSchema.methods.correctAns = async function (userAnswer) {
