@@ -21,6 +21,12 @@ const quizSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  questions: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Question",
+    },
+  ],
 });
 
 quizSchema.pre(/^find/, function (next) {
