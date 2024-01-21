@@ -1,14 +1,34 @@
+const Question = require("../models/Question");
 const Quiz = require("../models/Quiz");
 
 exports.createQuiz = async (req, res) => {
   try {
-    // console.log(req.user._id);
     const newQuiz = await Quiz.create({
       name: req.body.name,
       description: req.body.description,
       createdBy: req.user._id,
     });
     // console.log(newQuiz);
+    const Question_ids = await Promise.all(
+      req.body.questions.map((question) => {
+        // console.log(question);
+        return Question.create({
+          question: question.question,
+          choices: question.choices,
+          correct: question.correct,
+          type: question.type,
+          score: question.score,
+          quizId: newQuiz._id,
+          createdBy: req.user._id,
+        });
+      })
+    );
+
+    // console.log(Question_ids);
+    const ids = Question_ids.map((question) => question._id);
+    // console.log(ids);
+    newQuiz.questions = ids;
+    await newQuiz.save();
     res.status(201).json({
       status: "success",
       data: {
@@ -79,7 +99,9 @@ exports.getQuiz = async (req, res) => {
 exports.getAllQuizs = async (req, res, next) => {
   try {
     // console.log("Hello");
+    // console.log(req);
     const Quizs = await Quiz.find();
+    console.log(Quizs);
     return res.status(200).json({
       status: "success",
       result: Quizs.length,
