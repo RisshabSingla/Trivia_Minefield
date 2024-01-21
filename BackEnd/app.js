@@ -5,6 +5,8 @@ const cors = require("cors");
 
 const app = express();
 const userRoutes = require("./routes/userRoutes");
+const questionRoutes = require("./routes/questionRoutes");
+const quizRoutes = require("./routes/quizRoutes");
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -17,6 +19,8 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/question", questionRoutes);
+app.use("/api/v1/quiz", quizRoutes);
 
 app.use("*", (req, res) => {
   return res.status(200).send("Sorry the URL does not exist");
