@@ -1,4 +1,5 @@
 const Question = require("../models/Question");
+const Submission = require("../models/Submission");
 const Quiz = require("../models/Quiz");
 
 exports.createQuiz = async (req, res) => {
@@ -81,11 +82,19 @@ exports.deleteQuiz = async (req, res) => {
 exports.getQuiz = async (req, res) => {
   try {
     // console.log(req.params);
-    const Quiz = await Quiz.findById(req.params.id);
+    console.log(req.params.id);
+    const quiz = await Quiz.findById(req.params.id)
+      .populate({
+        path: "questions",
+      })
+      .populate({
+        path: "submissions",
+      });
+    console.log(quiz);
     return res.status(200).json({
       status: "success",
       data: {
-        Quiz,
+        quiz,
       },
     });
   } catch (err) {
@@ -100,13 +109,13 @@ exports.getAllQuizs = async (req, res, next) => {
   try {
     // console.log("Hello");
     // console.log(req);
-    const Quizs = await Quiz.find();
-    console.log(Quizs);
+    const quizs = await Quiz.find();
+    console.log(quizs);
     return res.status(200).json({
       status: "success",
-      result: Quizs.length,
+      result: quizs.length,
       data: {
-        Quizs,
+        quizs,
       },
     });
   } catch (err) {

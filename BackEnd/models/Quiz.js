@@ -29,11 +29,18 @@ const quizSchema = new mongoose.Schema({
   ],
 });
 
-quizSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "submissions",
-  });
-});
+// quizSchema.pre("findById", function (next) {
+//   console.log("Inside");
+//   this.populate({
+//     path: "questions",
+//   });
+//   // this.populate({
+//   //   path: "submissions",
+//   // }).populate({
+//   //   path: "questions",
+//   // });
+//   next();
+// });
 
 const Quiz = mongoose.model("Quiz", quizSchema);
 
