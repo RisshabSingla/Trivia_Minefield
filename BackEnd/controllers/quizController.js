@@ -109,7 +109,7 @@ exports.deleteQuiz = async (req, res) => {
 exports.getQuiz = async (req, res) => {
   try {
     // console.log(req.params);
-    console.log(req.params.id);
+    // console.log(req.params.id);
     const quiz = await Quiz.findById(req.params.id)
       .populate({
         path: "questions",
@@ -117,7 +117,7 @@ exports.getQuiz = async (req, res) => {
       .populate({
         path: "submissions",
       });
-    console.log(quiz);
+    // console.log(quiz);
     return res.status(200).json({
       status: "success",
       data: {
@@ -143,6 +143,57 @@ exports.getAllQuizs = async (req, res, next) => {
       result: quizs.length,
       data: {
         quizs,
+      },
+    });
+  } catch (err) {
+    return res.status(400).json({
+      status: "failed",
+      message: err,
+    });
+  }
+};
+
+exports.addQuestion = async (req, res, next) => {
+  try {
+    const question = await Question.create({
+      question: req.body.question,
+      choices: req.body.choices,
+      correct: req.body.correct,
+      type: req.body.type,
+      score: req.body.score,
+      quizId: req.params.id,
+      createdBy: req.user._id,
+    });
+    const quiz = await Quiz.findById(req.params.id);
+    quiz.questions.push(question._id);
+    await quiz.save();
+    res.status(200).json({
+      status: "success",
+      data: {
+        quiz,
+      },
+    });
+  } catch (err) {
+    return res.status(400).json({
+      status: "failed",
+      message: err,
+    });
+  }
+};
+
+exports.removeQuestion = async (req, res, next) => {
+  try {
+    await Question.findByIdAndDelete(req.params.questionID);
+    const quiz = await Quiz.findById(req.params.id);
+    quiz.questions = quiz.questions.filter((question) => {
+      // console.log(question);
+      return `${question}` !== req.params.questionID;
+    });
+    await quiz.save();
+    res.status(200).json({
+      status: "success",
+      data: {
+        quiz,
       },
     });
   } catch (err) {

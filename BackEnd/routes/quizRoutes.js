@@ -14,4 +14,11 @@ router
   .patch(authController.protect, quizController.updateQuiz)
   .delete(authController.protect, quizController.deleteQuiz);
 
+router
+  .route("/:id/addQuestion")
+  .patch(authController.protect, quizController.addQuestion);
+
+router
+  .route("/:id/removeQuestion/:questionID")
+  .patch(authController.protect, quizController.removeQuestion);
 module.exports = router;
