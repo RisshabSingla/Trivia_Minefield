@@ -1,6 +1,7 @@
 const Question = require("../models/Question");
 const Submission = require("../models/Submission");
 const Quiz = require("../models/Quiz");
+const User = require("../models/User");
 
 exports.createQuiz = async (req, res) => {
   try {
@@ -9,6 +10,7 @@ exports.createQuiz = async (req, res) => {
       description: req.body.description,
       createdBy: req.user._id,
     });
+
     // console.log(newQuiz);
     const Question_ids = await Promise.all(
       req.body.questions.map((question) => {
@@ -30,6 +32,10 @@ exports.createQuiz = async (req, res) => {
     // console.log(ids);
     newQuiz.questions = ids;
     await newQuiz.save();
+
+    const user = await User.findById(req.user._id);
+    user.createdQuizes.push(newQuiz._id);
+    await user.save();
     res.status(201).json({
       status: "success",
       data: {
