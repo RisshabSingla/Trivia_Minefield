@@ -11,6 +11,26 @@ const submissionSchema = new mongoose.Schema({
     ref: "Quiz",
     required: [true, "A Submission must belong to some quiz"],
   },
+  correctQuestions: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Question",
+    },
+  ],
+  inCorrectQuestions: [
+    {
+      question: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Question",
+      },
+      choosen: [
+        {
+          type: String,
+          required: [true, "The user must have chosen some option"],
+        },
+      ],
+    },
+  ],
   score: {
     type: Number,
     required: [true, "A submission must have a total score"],
