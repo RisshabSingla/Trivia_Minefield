@@ -6,6 +6,8 @@ router.post("/signup", authController.signup);
 
 router.post("/login", authController.login);
 
+router.post("/signout", authController.signout);
+
 router
   .route("/")
   .get(userController.getAllUsers)
