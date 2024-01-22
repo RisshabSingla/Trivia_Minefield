@@ -11,14 +11,30 @@ router
 router
   .route("/:id")
   .get(quizController.getQuiz)
-  .patch(authController.userLoggedIn, quizController.updateQuiz)
-  .delete(authController.userLoggedIn, quizController.deleteQuiz);
+  .patch(
+    authController.userLoggedIn,
+    authController.canChangeQuiz,
+    quizController.updateQuiz
+  )
+  .delete(
+    authController.userLoggedIn,
+    authController.canChangeQuiz,
+    quizController.deleteQuiz
+  );
 
 router
   .route("/:id/addQuestion")
-  .patch(authController.userLoggedIn, quizController.addQuestion);
+  .patch(
+    authController.userLoggedIn,
+    authController.canChangeQuiz,
+    quizController.addQuestion
+  );
 
 router
   .route("/:id/removeQuestion/:questionID")
-  .patch(authController.userLoggedIn, quizController.removeQuestion);
+  .patch(
+    authController.userLoggedIn,
+    authController.canChangeQuiz,
+    quizController.removeQuestion
+  );
 module.exports = router;

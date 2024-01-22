@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
+const Quiz = require("../models/Quiz");
 
 const signToken = (id) =>
   jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -109,6 +110,24 @@ exports.signout = async (req, res, next) => {
       status: "success",
       message: "logged out successfully",
     });
+  } catch (err) {
+    res.status(401).json({
+      status: "failed",
+      error: err,
+    });
+  }
+};
+
+exports.canChangeQuiz = async (req, res, next) => {
+  try {
+    const quiz = await Quiz.findById(req.params.id);
+    if (quiz.createdBy === req.user._id) {
+      next();
+    } else {
+      console.log("Not");
+      return next(new Error("You cannot change the quiz"));
+    }
+    next();
   } catch (err) {
     res.status(401).json({
       status: "failed",
