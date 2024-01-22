@@ -21,16 +21,17 @@ exports.getAllSubmissions = async (req, res, next) => {
 
 exports.createSubmission = async (req, res, next) => {
   try {
+    // console.log(req.params);
     const newSubmission = await Submission.create({
       submittedBy: req.user._id,
-      quizID: req.params.quizID,
+      quizID: req.params.quizId,
       score: req.body.score,
       inCorrectQuestions: req.body.inCorrectQuestions,
       correctQuestions: req.body.correctQuestions,
     });
     const user = await User.findById(req.user._id);
-    if (!user.givenQuizes.contains(req.params.quizID)) {
-      user.givenQuizes.push(req.params.quizID);
+    if (!user.givenQuizes.includes(req.params.quizId)) {
+      user.givenQuizes.push(req.params.quizId);
     }
     user.submissionMade.push(newSubmission._id);
     await user.save();

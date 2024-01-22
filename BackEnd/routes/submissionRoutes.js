@@ -6,7 +6,7 @@ const submissionController = require("../controllers/submissionController");
 router.route("/").get(submissionController.getAllSubmissions);
 
 router
-  .route("/quiz/:quizId")
+  .route("/:quizId")
   .post(authController.userLoggedIn, submissionController.createSubmission);
 
 module.exports = router;
