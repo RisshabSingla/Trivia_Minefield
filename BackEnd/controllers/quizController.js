@@ -44,18 +44,39 @@ exports.createQuiz = async (req, res) => {
   }
 };
 
-exports.updateQuiz = async (req, res) => {
+exports.updateQuiz = async (req, res, next) => {
   try {
-    const Quiz = await Quiz.findByIdAndUpdate(req.params.id, req.body, {
+    console.log(req.body);
+    if (req.body.questions) {
+      return next(new Error("You cannot edit questions from this route"));
+    }
+    // if (req.body.questions) {
+    //   const quiz = await Quiz.findById(req.params.id);
+    //   // const questions = quiz.questions;
+    //   req.body.questions.map((question) => {
+    //     if (!quiz.questions.contains(question)) {
+    //       quiz.questions.push(question);
+    //     }
+    //   });
+    //   quiz.questions.map(async (question, index) => {
+    //     if (!req.body.questions.contains(question)) {
+    //       quiz.questions.splice(index);
+    //       await Question.findByIdAndDelete(question._id);
+    //       // delete the
+    //     }
+    //   });
+    // } else {
+    const quiz = await Quiz.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: {
-        Quiz,
+        quiz,
       },
     });
+    // }
   } catch (err) {
     res.status(400).json({
       status: "failed",
@@ -66,6 +87,12 @@ exports.updateQuiz = async (req, res) => {
 
 exports.deleteQuiz = async (req, res) => {
   try {
+    const quiz = await Quiz.findById(req.params.id);
+    console.log(quiz);
+    quiz.questions.map(async (question) => {
+      console.log(question);
+      await Question.findByIdAndDelete(question);
+    });
     await Quiz.findByIdAndDelete(req.params.id);
     res.status(204).json({
       status: "success",

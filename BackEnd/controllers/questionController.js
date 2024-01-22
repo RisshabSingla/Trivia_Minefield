@@ -19,14 +19,14 @@ exports.createQuestion = async (req, res) => {
 
 exports.updateQuestion = async (req, res) => {
   try {
-    const Question = await Question.findByIdAndUpdate(req.params.id, req.body, {
+    const question = await Question.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
     res.status(200).json({
       status: "success",
       data: {
-        Question,
+        question,
       },
     });
   } catch (err) {
@@ -55,11 +55,11 @@ exports.deleteQuestion = async (req, res) => {
 exports.getQuestion = async (req, res) => {
   try {
     // console.log(req.params);
-    const Question = await Question.findById(req.params.id);
+    const question = await Question.findById(req.params.id);
     return res.status(200).json({
       status: "success",
       data: {
-        Question,
+        question,
       },
     });
   } catch (err) {
@@ -72,12 +72,12 @@ exports.getQuestion = async (req, res) => {
 
 exports.getAllQuestions = async (req, res, next) => {
   try {
-    const Questions = await Question.find();
+    const questions = await Question.find();
     return res.status(200).json({
       status: "success",
-      result: Questions.length,
+      result: questions.length,
       data: {
-        Questions,
+        questions,
       },
     });
   } catch (err) {
