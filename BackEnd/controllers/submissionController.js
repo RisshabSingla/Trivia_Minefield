@@ -1,3 +1,4 @@
+const Quiz = require("../models/Quiz");
 const Submission = require("../models/Submission");
 const User = require("../models/User");
 
@@ -35,6 +36,10 @@ exports.createSubmission = async (req, res, next) => {
     }
     user.submissionMade.push(newSubmission._id);
     await user.save();
+
+    const quiz = await Quiz.findById(req.params.quizId);
+    quiz.submissions.push(newSubmission._id);
+    await quiz.save();
     res.status(201).json({
       status: "success",
       data: {
