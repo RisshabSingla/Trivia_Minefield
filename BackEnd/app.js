@@ -19,11 +19,16 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api", (req, res) => {
-  console.log("Cookies: ", req.cookies);
+  // console.log("Cookies: ", req.cookies);
   res.status(200).send("Hello from backend");
 });
 app.use(async (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  next();
+});
+
+app.use(async (req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", true);
   next();
 });
 
