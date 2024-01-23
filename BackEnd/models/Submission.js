@@ -6,6 +6,10 @@ const submissionSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "A Submission must be made by some user"],
   },
+  quizName: {
+    type: String,
+    required: [true, "A Submission must belong to some quiz"],
+  },
   quizID: {
     type: mongoose.Schema.ObjectId,
     ref: "Quiz",

@@ -23,9 +23,11 @@ exports.getAllSubmissions = async (req, res, next) => {
 exports.createSubmission = async (req, res, next) => {
   try {
     // console.log(req.params);
+    const quiz = await Quiz.findById(req.params.quizId);
     const newSubmission = await Submission.create({
       submittedBy: req.user._id,
       quizID: req.params.quizId,
+      quizName: quiz.name,
       score: req.body.score,
       inCorrectQuestions: req.body.inCorrectQuestions,
       correctQuestions: req.body.correctQuestions,
@@ -37,7 +39,7 @@ exports.createSubmission = async (req, res, next) => {
     user.submissionMade.push(newSubmission._id);
     await user.save();
 
-    const quiz = await Quiz.findById(req.params.quizId);
+    // const quiz = await Quiz.findById(req.params.quizId);
     quiz.submissions.push(newSubmission._id);
     await quiz.save();
     res.status(201).json({
@@ -46,6 +48,23 @@ exports.createSubmission = async (req, res, next) => {
         submission: newSubmission,
         user: user,
       },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "failed",
+      message: err,
+    });
+  }
+};
+
+exports.getMySubmissions = async (req, res, next) => {
+  try {
+    await req.user.populate({
+      path: "submissionMade",
+    });
+    res.status(200).json({
+      status: "success",
+      data: req.user.submissionMade,
     });
   } catch (err) {
     res.status(400).json({
