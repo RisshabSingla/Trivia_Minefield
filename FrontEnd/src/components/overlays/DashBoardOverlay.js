@@ -4,12 +4,7 @@ import { QuizesMade } from "./QuizesMade";
 import { QuizesAttended } from "./QuizesAttended";
 import { AttendQuiz } from "./AttendQuiz";
 
-export function DashBoardOverlay({
-  overlay,
-  setOverlay,
-  userSettings,
-  setQuiz,
-}) {
+export function DashBoardOverlay({ overlay, setOverlay, userSettings }) {
   return (
     <div className="overflow-auto	 w-screen fixed h-screen z-10  flex justify-center items-center">
       <div className="h-5/6 overflow-auto rounded-xl">
@@ -31,7 +26,7 @@ export function DashBoardOverlay({
               ""
             )}
             {overlay === "build" ? <BuildQuiz setOverlay={setOverlay} /> : ""}
-            {overlay === "attend" ? <AttendQuiz setQuiz={setQuiz} /> : ""}
+            {overlay === "attend" ? <AttendQuiz /> : ""}
           </div>
         </div>
       </div>

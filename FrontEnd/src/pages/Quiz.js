@@ -41,7 +41,7 @@ function Question({ question, choices, handleOptionClick, selectedOption }) {
   );
 }
 
-function Quiz({ loggedInID, userXAuth, quizData }) {
+function Quiz({ loggedInID, quizData }) {
   const navigate = useNavigate();
   // console.log("Data");
   // console.log(quizData);
@@ -55,7 +55,7 @@ function Quiz({ loggedInID, userXAuth, quizData }) {
   const [checkDisable, setCheckDisable] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [userSettings, setUserSettings] = useState([]);
-  axios.defaults.headers.common["x-auth-token"] = `${userXAuth}`;
+
   // console.log(quiz);
   const [message, setMessage] = useState("");
   function handleOptionClick(index) {

@@ -5,24 +5,24 @@ import { useNavigate } from "react-router-dom";
 
 import { DashBoardOverlay } from "../components/overlays/DashBoardOverlay";
 
-function Dashboard({ loggedInID, userXAuth, setQuiz }) {
+function Dashboard() {
   const navigate = useNavigate();
   const [userSettings, setUserSettings] = useState([]);
   const [quizes, setQuizes] = useState([]);
   const [overlay, setOverlay] = useState("");
-  axios.defaults.headers.common["x-auth-token"] = `${userXAuth}`;
 
   // User Details
   useEffect(() => {
     async function getData() {
       try {
         const res = await axios.get(
-          `https://trivia-minefield.onrender.com/api/user/${loggedInID}`
+          `http://localhost:8080/api/v1/users/getme`,
+          {
+            withCredentials: true,
+          }
         );
-        // console.log(res.data);
-        setUserSettings(res.data.data);
+        setUserSettings(res.data.data.user);
       } catch (err) {
-        // console.log(err);
         navigate("/");
       }
     }
@@ -32,13 +32,9 @@ function Dashboard({ loggedInID, userXAuth, setQuiz }) {
   useEffect(() => {
     async function getQuizes() {
       try {
-        const res = await axios.get(
-          `https://trivia-minefield.onrender.com/api/quiz/`
-        );
-        // console.log(res.data);
-        setQuizes(res.data.data);
+        const res = await axios.get(`http://localhost:8080/api/v1/quiz/`);
+        setQuizes(res.data.data.quizs);
       } catch (err) {
-        // console.log(err);
         navigate("/");
       }
     }
@@ -52,7 +48,6 @@ function Dashboard({ loggedInID, userXAuth, setQuiz }) {
           userSettings={userSettings}
           overlay={overlay}
           setOverlay={setOverlay}
-          setQuiz={setQuiz}
         />
       ) : (
         ""
@@ -137,31 +132,36 @@ function Dashboard({ loggedInID, userXAuth, setQuiz }) {
                     </div>
                   </div>
                   {/* {All the quizes } */}
-                  {quizes.map((quiz, index) => (
-                    <div key={index} className="grid grid-cols-8 p-2 gap-3">
-                      <div className="col-span-1">
-                        <p className="truncate"> {index + 1}</p>
+                  {quizes &&
+                    quizes.map((quiz, index) => (
+                      <div key={index} className="grid grid-cols-8 p-2 gap-3">
+                        <div className="col-span-1">
+                          <p className="truncate"> {index + 1}</p>
+                        </div>
+                        <div className="col-span-2">
+                          <p className="truncate"> {quiz.name}</p>
+                        </div>
+                        <div className="col-span-2">
+                          <p className="truncate"> {quiz.description}</p>
+                        </div>
+                        <div className="col-span-3">
+                          <button
+                            className="flex w-full"
+                            onClick={() => {
+                              navigator.clipboard.writeText(quiz._id);
+                            }}
+                          >
+                            <img
+                              width="22px "
+                              src="./images/magnet.svg"
+                              alt=""
+                            />
+                            {"  "}
+                            <p className="truncate	">{quiz._id} </p>
+                          </button>
+                        </div>
                       </div>
-                      <div className="col-span-2">
-                        <p className="truncate"> {quiz.name}</p>
-                      </div>
-                      <div className="col-span-2">
-                        <p className="truncate"> {quiz.description}</p>
-                      </div>
-                      <div className="col-span-3">
-                        <button
-                          className="flex w-full"
-                          onClick={() => {
-                            navigator.clipboard.writeText(quiz._id);
-                          }}
-                        >
-                          <img width="22px " src="./images/magnet.svg" alt="" />
-                          {"  "}
-                          <p className="truncate	">{quiz._id} </p>
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             </div>

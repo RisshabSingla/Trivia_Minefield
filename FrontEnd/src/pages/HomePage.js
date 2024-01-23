@@ -4,13 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-function Login({
-  setOverlay,
-  message,
-  setMessage,
-  setLoggedInID,
-  setUserXAuth,
-}) {
+function Login({ setOverlay, message, setMessage }) {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
@@ -19,7 +13,6 @@ function Login({
 
   function handleChange(e) {
     const { id, value } = e.target;
-    // console.log(id, " ", value);
 
     setUser({
       ...user,
@@ -30,13 +23,12 @@ function Login({
   function handleLoginUser(e) {
     e.preventDefault();
     axios
-      .post("https://trivia-minefield.onrender.com/api/login", user)
+      .post("http://localhost:8080/api/v1/users/login", user)
       .then((res) => {
         // console.log(res);
-        setUserXAuth(res.data.data);
-        setLoggedInID(res.data.id);
+        // console.log(res.cookie);
+        document.cookie = `jwt=${res.data.token}`;
         setMessage("Login Successful");
-
         setTimeout(() => {
           navigate("/dashboard");
         }, 1000);
@@ -45,8 +37,8 @@ function Login({
         // <Navigate replace to="/dashboard" />;
       })
       .catch((res) => {
-        // console.log(res);
-        setMessage(res.response.data.message);
+        console.log(res);
+        // setMessage(res.response.data.message);
         // setMessageClassName("mb-4 pb-4 ");
       });
   }
@@ -123,6 +115,7 @@ function Login({
 }
 
 function SignUp({ setOverlay, message, setMessage }) {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -143,16 +136,22 @@ function SignUp({ setOverlay, message, setMessage }) {
 
     // console.log(data);
     axios
-      .post("https://trivia-minefield.onrender.com/api/user", user)
+      .post("http://localhost:8080/api/v1/users/signup", user)
       .then((res) => {
         // console.log(res);
-        setMessage("Please login using your new credentials");
-        setOverlay("login");
+        // setMessage("Please login using your new credentials");
+
+        // setOverlay("login");
         // navigate("/");
+        document.cookie = `jwt=${res.data.token}`;
+        setMessage("SignUp Successful");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1000);
       })
       .catch((res) => {
-        // console.log(res);
-        setMessage(res.response.data.message);
+        console.log(res);
+        setMessage("Failed");
         // setMessageClassName("mb-4 pb-4 ");
       });
   }
@@ -266,7 +265,7 @@ function SignUp({ setOverlay, message, setMessage }) {
   );
 }
 
-function Overlay({ overlay, setOverlay, setLoggedInID, setUserXAuth }) {
+function Overlay({ overlay, setOverlay }) {
   const [message, setMessage] = useState("");
   return (
     <div className="w-screen fixed h-screen z-10  flex justify-center items-center">
@@ -282,8 +281,6 @@ function Overlay({ overlay, setOverlay, setLoggedInID, setUserXAuth }) {
               setOverlay={setOverlay}
               message={message}
               setMessage={setMessage}
-              setLoggedInID={setLoggedInID}
-              setUserXAuth={setUserXAuth}
             />
           ) : (
             <SignUp
@@ -298,19 +295,14 @@ function Overlay({ overlay, setOverlay, setLoggedInID, setUserXAuth }) {
   );
 }
 
-function HomePage({ setLoggedInID, setUserXAuth, backendActive }) {
+function HomePage({ backendActive }) {
   const screenSize = useScreenSize();
   const [overlay, setOverlay] = useState("");
 
   return (
     <>
       {overlay !== "" ? (
-        <Overlay
-          overlay={overlay}
-          setOverlay={setOverlay}
-          setLoggedInID={setLoggedInID}
-          setUserXAuth={setUserXAuth}
-        />
+        <Overlay overlay={overlay} setOverlay={setOverlay} />
       ) : (
         ""
       )}
