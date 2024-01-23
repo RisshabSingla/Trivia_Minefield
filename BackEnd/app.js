@@ -22,6 +22,10 @@ app.get("/api", (req, res) => {
   console.log("Cookies: ", req.cookies);
   res.status(200).send("Hello from backend");
 });
+app.use(async (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  next();
+});
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/question", questionRoutes);
