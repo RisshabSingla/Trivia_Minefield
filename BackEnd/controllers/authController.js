@@ -88,7 +88,7 @@ exports.userLoggedIn = async (req, res, next) => {
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const freshUser = await User.findById(decoded.id);
-    console.log(freshUser);
+    // console.log(freshUser);
 
     if (!freshUser) {
       return next(new Error("User doesn't exist"));

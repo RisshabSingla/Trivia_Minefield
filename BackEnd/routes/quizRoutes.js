@@ -3,6 +3,14 @@ const router = require("express").Router();
 const quizController = require("../controllers/quizController");
 const authController = require("../controllers/authController");
 
+router.get(
+  "/getattended",
+  authController.userLoggedIn,
+  quizController.getAttended
+);
+
+router.get("/getmade", authController.userLoggedIn, quizController.getMade);
+
 router
   .route("/")
   .get(quizController.getAllQuizs)

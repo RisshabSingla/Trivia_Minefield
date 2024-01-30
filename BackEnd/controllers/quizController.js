@@ -209,3 +209,36 @@ exports.removeQuestion = async (req, res, next) => {
     });
   }
 };
+
+exports.getAttended = async (req, res, next) => {
+  try {
+    await req.user.populate({
+      path: "givenQuizes",
+    });
+    res.status(200).json({
+      status: "success",
+      data: req.user.givenQuizes,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "failed",
+      message: err,
+    });
+  }
+};
+exports.getMade = async (req, res, next) => {
+  try {
+    await req.user.populate({
+      path: "createdQuizes",
+    });
+    res.status(200).json({
+      status: "success",
+      data: req.user.createdQuizes,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "failed",
+      message: err,
+    });
+  }
+};
