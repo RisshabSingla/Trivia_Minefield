@@ -8,11 +8,16 @@ function NewQuestion({ questions, setQuestions, setAddQuestion, setMessage }) {
   const [question, setQuestion] = useState("");
   const [correct, setCorrect] = useState("");
   const [newChoice, setNewChoice] = useState("");
+  const [score, setScore] = useState("");
   function handleChoiceChange(e) {
     setNewChoice(e.target.value);
   }
   function handleQuestionChange(e) {
     setQuestion(e.target.value);
+  }
+
+  function handleScoreChange(e) {
+    setScore(e.target.value);
   }
 
   function checkQuestion() {
@@ -31,7 +36,12 @@ function NewQuestion({ questions, setQuestions, setAddQuestion, setMessage }) {
       checkQuestion();
       setQuestions([
         ...questions,
-        { question: question, choices: choices, correct: correct },
+        {
+          question: question,
+          choices: choices,
+          correct: correct,
+          score: score,
+        },
       ]);
       setAddQuestion(false);
     } catch (err) {
@@ -64,6 +74,16 @@ function NewQuestion({ questions, setQuestions, setAddQuestion, setMessage }) {
                 className="col-span-3 p-2 rounded-xl text-black"
                 placeholder="Enter the question here"
               ></input>
+              <div className="flex justify-around col-span-3">
+                <span className="pt-1">Score</span>
+                <input
+                  value={score}
+                  type="number"
+                  onChange={handleScoreChange}
+                  className="p-2 rounded-xl text-black w-1/2"
+                  placeholder="Enter the question score here"
+                ></input>
+              </div>
               <span className="px-2 flex justify-evenly col-span-3">
                 {" "}
                 Choices:

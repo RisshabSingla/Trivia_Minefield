@@ -24,25 +24,28 @@ export function AttendQuiz({ setQuiz }) {
     setQuizID(e.target.value);
   }
   function handleQuizAttend() {
-    async function handle() {
-      try {
-        const res = await axios.get(
-          `https://trivia-minefield.onrender.com/api/quiz/${quizID}`
-        );
-        // console.log("getting");
-        setMessage("Quiz starting");
-        // console.log(res.data.data);
-        setQuiz(res.data.data);
-        setTimeout(() => {
-          navigate("/quiz");
-        }, 1000);
-      } catch (err) {
-        setMessage(err?.response?.data?.message);
-      }
-    }
+    console.log("Pressed");
+    navigate(`/attendQuiz/${quizID}`);
+    // async function handle() {
+    //   try {
+    //     const res = await axios.get(
+    //       `http://localhost:8080/api/v1/quiz/${quizID}`
+    //     );
+    //     console.log(res);
+    //     // console.log("getting");
+    //     setMessage("Quiz starting");
+    //     // console.log(res.data.data);
+    //     setQuiz(res.data.data);
+    //     setTimeout(() => {
+    //       navigate("/quiz");
+    //     }, 1000);
+    //   } catch (err) {
+    //     setMessage(err?.response?.data?.message);
+    //   }
+    // }
 
-    // console.log("Hello");
-    handle();
+    // // console.log("Hello");
+    // handle();
   }
 
   return (

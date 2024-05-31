@@ -1,39 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import QuizMadeRow from "./components/QuizMadeRow";
 
-function Quiz({ quiz, index }) {
-  return (
-    <div className=" grid grid-cols-8 p-2 gap-2">
-      <div className="col-span-1">
-        <p className="truncate"> {index + 1}</p>
-      </div>
-      <div className="col-span-2">
-        <p className="truncate"> {quiz.name}</p>
-      </div>
-      <div className="col-span-2">
-        <p className="truncate"> {quiz.description}</p>
-      </div>
-      <div className="col-span-3">
-        <button
-          className="flex w-full"
-          onClick={() => {
-            navigator.clipboard.writeText(quiz._id);
-          }}
-        >
-          <img width="22px" src="./images/magnet.svg" alt="" />
+export function QuizesMade() {
+  const [made, setMade] = useState([]);
 
-          <p className="truncate	">{quiz._id} </p>
-        </button>
-      </div>
-      {/* <div>
-        <button className="w-full">
-          <img width="30px" src="./images/edit.svg" alt="Edit"></img>
-        </button>
-      </div> */}
-    </div>
-  );
-}
+  useEffect(() => {
+    async function getMyMade() {
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/api/v1/quiz/getmade`,
+          {
+            withCredentials: true,
+          }
+        );
+        setMade(res.data.data);
+        // console.log(res);
+      } catch (err) {
+        // console.log(err);
+      }
+    }
+    getMyMade();
+  }, []);
 
-export function QuizesMade({ made = [] }) {
   return (
     <div>
       <div className="p-4 text-2xl flex justify-evenly">
@@ -64,7 +53,7 @@ export function QuizesMade({ made = [] }) {
                   </div> */}
                 </div>
                 {made.map((quiz, index) => (
-                  <Quiz key={index} quiz={quiz} index={index} />
+                  <QuizMadeRow key={index} quiz={quiz} index={index} />
                 ))}
               </div>
             </div>

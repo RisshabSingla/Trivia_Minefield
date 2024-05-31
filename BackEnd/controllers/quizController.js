@@ -52,7 +52,7 @@ exports.createQuiz = async (req, res) => {
 
 exports.updateQuiz = async (req, res, next) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     if (req.body.questions) {
       return next(new Error("You cannot edit questions from this route"));
     }
@@ -94,9 +94,9 @@ exports.updateQuiz = async (req, res, next) => {
 exports.deleteQuiz = async (req, res) => {
   try {
     const quiz = await Quiz.findById(req.params.id);
-    console.log(quiz);
+    // console.log(quiz);
     quiz.questions.map(async (question) => {
-      console.log(question);
+      // console.log(question);
       await Question.findByIdAndDelete(question);
     });
     await Quiz.findByIdAndDelete(req.params.id);
@@ -143,7 +143,7 @@ exports.getAllQuizs = async (req, res, next) => {
     // console.log("Hello");
     // console.log(req);
     const quizs = await Quiz.find();
-    console.log(quizs);
+    // console.log(quizs);
     return res.status(200).json({
       status: "success",
       result: quizs.length,

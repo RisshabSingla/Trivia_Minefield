@@ -22,7 +22,7 @@ export function Question({
             questions.splice(index, 1);
             setQuestions([...questions]);
           }}
-          className="w-1/6"
+          className="w-1/6 hover:text-red-500"
         >
           X
         </button>

@@ -91,6 +91,15 @@ function Dashboard() {
                           </div>
                         </div>
                       </button>
+                      <button onClick={() => setOverlay("submissions")}>
+                        <div className="p-2">
+                          <div className=""> Your Submissions</div>
+                          <div className="">
+                            {" "}
+                            {userSettings?.submissionMade?.length}
+                          </div>
+                        </div>
+                      </button>
                     </div>
                   </div>
 
@@ -98,7 +107,12 @@ function Dashboard() {
                   <div className="bg-slate-300 rounded-lg p-2 font-bold text-lg m-2">
                     <div className="p-2 text-center">Quiz Tools</div>
                     <div className="sm:flex justify-around	">
-                      <button onClick={() => setOverlay("build")}>
+                      <button
+                        onClick={
+                          () => navigate("/buildquiz")
+                          // setOverlay("build")
+                        }
+                      >
                         <div className="m-2 p-3 bg-slate-400 rounded-xl">
                           Build Quiz
                         </div>

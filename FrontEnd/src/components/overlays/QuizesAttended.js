@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { QuizRow } from "./components/QuizRow";
 
-export function QuizesAttended({ attended = [] }) {
+export function QuizesAttended() {
+  const [attended, setAttended] = useState([]);
+  useEffect(() => {
+    async function getMyAttended() {
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/api/v1/quiz/getattended`,
+          {
+            withCredentials: true,
+          }
+        );
+        setAttended(res.data.data);
+        // console.log(res);
+      } catch (err) {
+        // console.log(err);
+      }
+    }
+    getMyAttended();
+  }, []);
   return (
     <div>
       <div>
@@ -29,29 +49,7 @@ export function QuizesAttended({ attended = [] }) {
                     </div>
                   </div>
                   {attended?.map((quiz, index) => (
-                    <div className=" grid grid-cols-8 p-2">
-                      <div className="col-span-1">
-                        <p className="truncate"> {index + 1}</p>
-                      </div>
-                      <div className="col-span-2">
-                        <p className="truncate"> {quiz.name}</p>
-                      </div>
-                      <div className="col-span-2">
-                        <p className="truncate"> {quiz.description}</p>
-                      </div>
-                      <div className="col-span-3">
-                        <button
-                          className="flex w-full"
-                          onClick={() => {
-                            navigator.clipboard.writeText(quiz._id);
-                          }}
-                        >
-                          <img width="22px " src="./images/magnet.svg" alt="" />
-                          {"  "}
-                          <p className="truncate	">{quiz._id} </p>
-                        </button>
-                      </div>
-                    </div>
+                    <QuizRow key={index} quiz={quiz} index={index} />
                   ))}
                 </div>
               </div>

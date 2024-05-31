@@ -13,6 +13,7 @@ const questionSchema = new mongoose.Schema({
   type: {
     type: String,
     required: [true, "A quiz can be single choiced, multiple choiced"],
+    default: "single",
   },
   score: {
     type: Number,

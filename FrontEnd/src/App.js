@@ -5,6 +5,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import WrongPage from "./pages/WrongPage";
+import SubmissionView from "./pages/SubmissionView";
+import BuildQuiz from "./pages/BuildQuiz";
+import EditQuiz from "./pages/EditQuiz";
+import AttendQuiz from "./pages/AttendQuiz";
 
 function App() {
   const [backendActive, setBackEndActive] = useState(false);
@@ -24,6 +28,10 @@ function App() {
         <Route path="/" element={<HomePage backendActive={backendActive} />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/quiz" element={<Quiz />} />
+        <Route path="/submission/:id" element={<SubmissionView />} />
+        <Route path="buildquiz" element={<BuildQuiz />} />
+        <Route path="editQuiz/:id" element={<EditQuiz />} />
+        <Route path="attendQuiz/:id" element={<AttendQuiz />} />
         <Route path="*" element={<WrongPage />} />
       </Routes>
     </BrowserRouter>

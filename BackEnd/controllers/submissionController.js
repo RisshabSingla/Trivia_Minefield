@@ -73,3 +73,30 @@ exports.getMySubmissions = async (req, res, next) => {
     });
   }
 };
+
+exports.getSubmission = async (req, res, next) => {
+  try {
+    // console.log(req.params);
+    // console.log(req.params.id);
+    const submission = await Submission.findById(req.params.id)
+      .populate("correctQuestions")
+      .populate({
+        path: "inCorrectQuestions",
+        populate: {
+          path: "questionID",
+        },
+      });
+    // console.log(quiz);
+    return res.status(200).json({
+      status: "success",
+      data: {
+        submission,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "failed",
+      message: err,
+    });
+  }
+};

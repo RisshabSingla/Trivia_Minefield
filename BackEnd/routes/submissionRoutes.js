@@ -11,6 +11,12 @@ router.get(
 
 router.route("/").get(submissionController.getAllSubmissions);
 
+router.get(
+  "/:id",
+  authController.userLoggedIn,
+  submissionController.getSubmission
+);
+
 router
   .route("/:quizId")
   .post(authController.userLoggedIn, submissionController.createSubmission);

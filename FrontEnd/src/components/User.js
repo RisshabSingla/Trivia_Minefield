@@ -10,8 +10,8 @@ function User({ userSettings }) {
             height="40px"
             src={
               userSettings?.gender === "male"
-                ? "./images/userImage/1.svg"
-                : "./images/userImage/1.svg"
+                ? "/images/userImage/1.svg"
+                : "/images/userImage/1.svg"
             }
             alt=""
           />

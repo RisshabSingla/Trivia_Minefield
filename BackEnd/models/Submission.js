@@ -23,16 +23,14 @@ const submissionSchema = new mongoose.Schema({
   ],
   inCorrectQuestions: [
     {
-      question: {
+      questionID: {
         type: mongoose.Schema.ObjectId,
         ref: "Question",
       },
-      choosen: [
-        {
-          type: String,
-          required: [true, "The user must have chosen some option"],
-        },
-      ],
+      choiceAnswered: {
+        type: String,
+        required: [true, "The user must have chosen some option"],
+      },
     },
   ],
   score: {

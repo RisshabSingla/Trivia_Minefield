@@ -64,7 +64,7 @@ function BuildQuiz({ setOverlay }) {
         <div className="p-4 text-2xl flex justify-evenly">
           <h1 className="text-white"> Let's make a new Quiz!</h1>
         </div>
-        <div className=" pt-0 text-xl flex justify-evenly text-white">
+        <div className="pt-0 text-xl flex justify-evenly text-white">
           <div className="p-2">
             <div className="grid grid-cols-3 ">
               <div className="p-4">Quiz Name</div>

@@ -38,6 +38,7 @@ function Login({ setOverlay, message, setMessage }) {
       })
       .catch((res) => {
         console.log(res);
+        setMessage("Incorrect UserName or Password");
         // setMessage(res.response.data.message);
         // setMessageClassName("mb-4 pb-4 ");
       });

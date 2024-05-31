@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const User = require("../models/User");
 const Quiz = require("../models/Quiz");
@@ -47,9 +48,18 @@ exports.login = async (req, res, next) => {
       return next(new Error("Please provide email and password"));
     }
     const user = await User.findOne({ email: email });
-    if (!user || !(await user.correctPassword(password, user.password))) {
+    // console.log(user);
+    // console.log(req.body.password);
+    // console.log(user.password);
+
+    // if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+    //   return next(new Error("Incorrect Email or Password"));
+    // }
+
+    if (!user || user.password !== req.body.password) {
       return next(new Error("Incorrect Email or Password"));
     }
+
     const token = signToken(`${user._id}`);
     const cookieOptions = {
       expires: new Date(
