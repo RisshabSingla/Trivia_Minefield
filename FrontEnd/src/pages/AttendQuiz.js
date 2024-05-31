@@ -274,7 +274,7 @@ async function MakeNewSubmission({ quizID }) {
 
 function QuizFinished({ quizID }) {
   // console.log(submission);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   submission.correctQuestions = [...new Set(submission.correctQuestions)];
   submission.inCorrectQuestions = submission.inCorrectQuestions.reduce(

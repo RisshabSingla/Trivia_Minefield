@@ -1,11 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function QuizMadeRow({ quiz, index }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   function handleEditQuiz(e, quizId) {
-    navigate(`/editQuiz/${quizId}`);
+    // navigate(`/editQuiz/${quizId}`);
   }
 
   return (
