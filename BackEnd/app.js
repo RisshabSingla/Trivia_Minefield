@@ -47,16 +47,6 @@ app.get("/", (req, res) => {
   res.status(200).send("Hello from backend");
 });
 
-app.use(async (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  next();
-});
-
-app.use(async (req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
-});
-
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/question", questionRoutes);
 app.use("/api/v1/quiz", quizRoutes);
