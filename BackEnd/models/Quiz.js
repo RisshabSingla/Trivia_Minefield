@@ -16,6 +16,7 @@ const quizSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: [true, "A Quiz must be created by some user"],
+    index: true,
   },
   createdAt: {
     type: Date,

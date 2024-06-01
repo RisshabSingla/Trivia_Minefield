@@ -5,6 +5,7 @@ const submissionSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: [true, "A Submission must be made by some user"],
+    index: true,
   },
   quizName: {
     type: String,
@@ -14,6 +15,7 @@ const submissionSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Quiz",
     required: [true, "A Submission must belong to some quiz"],
+    index: true,
   },
   correctQuestions: [
     {

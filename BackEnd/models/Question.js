@@ -25,6 +25,7 @@ const questionSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Quiz",
     required: [true, "A question must belong to some quiz"],
+    index: true,
   },
   createdBy: {
     type: mongoose.Schema.ObjectId,
