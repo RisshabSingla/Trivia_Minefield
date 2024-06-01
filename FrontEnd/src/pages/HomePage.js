@@ -375,7 +375,7 @@ function HomePage({ backendActive }) {
       ) : (
         <footer className="sticky bottom-0 text-zinc-700 p-2 flex justify-evenly">
           <div>
-            <p> A kind request: Since the backend is hosted on Render</p>
+            <p> A kind request: Backend may take some time to respond</p>
             <p>Kindly wait for a few seconds for the server to start</p>
           </div>
         </footer>

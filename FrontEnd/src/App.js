@@ -20,7 +20,9 @@ function App() {
         );
         console.log(res.data);
         setBackEndActive(true);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     }
     invokeBackend();
   }, []);
