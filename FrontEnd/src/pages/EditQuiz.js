@@ -10,8 +10,11 @@ function EditQuiz() {
     async function getData() {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/users/getme`,
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/users/getme`,
           {
+            headers: {
+              Authorization: `Bearer ${document.cookie.substring(4)}`,
+            },
             withCredentials: true,
           }
         );
@@ -29,8 +32,11 @@ function EditQuiz() {
   useEffect(() => {
     async function getQuiz() {
       const res = await axios.get(
-        `http://localhost:8080/api/v1/quiz/${params.id}`,
+        `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/quiz/${params.id}`,
         {
+          headers: {
+            Authorization: `Bearer ${document.cookie.substring(4)}`,
+          },
           withCredentials: true,
         }
       );

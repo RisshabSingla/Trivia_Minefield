@@ -10,8 +10,11 @@ export function Submissions() {
     async function getMySubmissions() {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/submission/getsubmissions`,
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/submission/getsubmissions`,
           {
+            headers: {
+              Authorization: `Bearer ${document.cookie.substring(4)}`,
+            },
             withCredentials: true,
           }
         );

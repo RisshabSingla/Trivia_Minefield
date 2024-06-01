@@ -9,8 +9,11 @@ export function QuizesMade() {
     async function getMyMade() {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/quiz/getmade`,
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/quiz/getmade`,
           {
+            headers: {
+              Authorization: `Bearer ${document.cookie.substring(4)}`,
+            },
             withCredentials: true,
           }
         );

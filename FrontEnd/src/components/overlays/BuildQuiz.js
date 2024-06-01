@@ -32,7 +32,7 @@ function BuildQuiz({ setOverlay }) {
         questions: questions,
       };
       const res = await axios.post(
-        "https://trivia-minefield.onrender.com/api/quiz",
+        "https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/quiz",
         quiz
       );
       setMessage("Quiz made successfully");

@@ -54,8 +54,11 @@ function SubmissionView() {
     async function getData() {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/users/getme`,
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/users/getme`,
           {
+            headers: {
+              Authorization: `Bearer ${document.cookie.substring(4)}`,
+            },
             withCredentials: true,
           }
         );
@@ -68,8 +71,11 @@ function SubmissionView() {
     async function getSubmission() {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/submission/${submissionId}`,
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/submission/${submissionId}`,
           {
+            headers: {
+              Authorization: `Bearer ${document.cookie.substring(4)}`,
+            },
             withCredentials: true,
           }
         );

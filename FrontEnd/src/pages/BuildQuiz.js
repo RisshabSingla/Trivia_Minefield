@@ -39,9 +39,16 @@ function BuildQuiz() {
         description: quizDesc,
         questions: questions,
       };
-      const res = await axios.post("http://localhost:8080/api/v1/quiz", quiz, {
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        "https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/quiz",
+        quiz,
+        {
+          headers: {
+            Authorization: `Bearer ${document.cookie.substring(4)}`,
+          },
+          withCredentials: true,
+        }
+      );
       console.log(res);
       setMessage("Quiz made successfully");
       setTimeout(() => {
@@ -74,8 +81,11 @@ function BuildQuiz() {
     async function getData() {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/users/getme`,
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/users/getme`,
           {
+            headers: {
+              Authorization: `Bearer ${document.cookie.substring(4)}`,
+            },
             withCredentials: true,
           }
         );

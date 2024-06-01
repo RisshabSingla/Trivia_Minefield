@@ -256,9 +256,12 @@ async function MakeNewSubmission({ quizID }) {
   const navigate = useNavigate();
   try {
     const res = await axios.post(
-      `http://localhost:8080/api/v1/submission/${quizID}`,
+      `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/submission/${quizID}`,
       submission,
       {
+        headers: {
+          Authorization: `Bearer ${document.cookie.substring(4)}`,
+        },
         withCredentials: true,
       }
     );
@@ -327,8 +330,11 @@ function AttendQuiz() {
     async function getData() {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/users/getme`,
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/users/getme`,
           {
+            headers: {
+              Authorization: `Bearer ${document.cookie.substring(4)}`,
+            },
             withCredentials: true,
           }
         );
@@ -348,8 +354,11 @@ function AttendQuiz() {
       try {
         setIsLoading(true);
         const res = await axios.get(
-          `http://localhost:8080/api/v1/quiz/${params.id}`,
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/quiz/${params.id}`,
           {
+            headers: {
+              Authorization: `Bearer ${document.cookie.substring(4)}`,
+            },
             withCredentials: true,
           }
         );

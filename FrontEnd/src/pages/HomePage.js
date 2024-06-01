@@ -23,10 +23,14 @@ function Login({ setOverlay, message, setMessage }) {
   function handleLoginUser(e) {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/v1/users/login", user)
+      .post(
+        "https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/users/login",
+        user
+      )
       .then((res) => {
         // console.log(res);
         // console.log(res.cookie);
+        console.log(res.data.token);
         document.cookie = `jwt=${res.data.token}`;
         setMessage("Login Successful");
         setTimeout(() => {
@@ -137,7 +141,10 @@ function SignUp({ setOverlay, message, setMessage }) {
 
     // console.log(data);
     axios
-      .post("http://localhost:8080/api/v1/users/signup", user)
+      .post(
+        "https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/users/signup",
+        user
+      )
       .then((res) => {
         // console.log(res);
         // setMessage("Please login using your new credentials");
@@ -299,6 +306,16 @@ function Overlay({ overlay, setOverlay }) {
 function HomePage({ backendActive }) {
   const screenSize = useScreenSize();
   const [overlay, setOverlay] = useState("");
+
+  // axios.interceptors.request.use((request) => {
+  //   console.log("Starting Request", JSON.stringify(request, null, 2));
+  //   return request;
+  // });
+
+  // axios.interceptors.response.use((response) => {
+  //   console.log("Response:", JSON.stringify(response, null, 2));
+  //   return response;
+  // });
 
   return (
     <>

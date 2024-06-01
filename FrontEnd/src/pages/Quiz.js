@@ -69,7 +69,7 @@ function Quiz({ loggedInID, quizData }) {
     async function getData() {
       try {
         const res = await axios.get(
-          `https://trivia-minefield.onrender.com/api/user/${loggedInID}`
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/user/${loggedInID}`
         );
         // console.log(res.data);
         setUserSettings(res.data.data);

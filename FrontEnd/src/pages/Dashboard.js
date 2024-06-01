@@ -10,19 +10,33 @@ function Dashboard() {
   const [userSettings, setUserSettings] = useState([]);
   const [quizes, setQuizes] = useState([]);
   const [overlay, setOverlay] = useState("");
+  // axios.interceptors.request.use((request) => {
+  //   console.log("Starting Request", JSON.stringify(request, null, 2));
+  //   return request;
+  // });
+
+  // axios.interceptors.response.use((response) => {
+  //   console.log("Response:", JSON.stringify(response, null, 2));
+  //   return response;
+  // });
 
   // User Details
   useEffect(() => {
     async function getData() {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/v1/users/getme`,
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/users/getme`,
           {
+            headers: {
+              Authorization: `Bearer ${document.cookie.substring(4)}`,
+            },
             withCredentials: true,
           }
         );
+
         setUserSettings(res.data.data.user);
       } catch (err) {
+        console.log(err);
         navigate("/");
       }
     }
@@ -32,7 +46,9 @@ function Dashboard() {
   useEffect(() => {
     async function getQuizes() {
       try {
-        const res = await axios.get(`http://localhost:8080/api/v1/quiz/`);
+        const res = await axios.get(
+          `https://triviaminefieldbackend-risshab-singlas-projects.vercel.app/api/v1/quiz/`
+        );
         setQuizes(res.data.data.quizs);
       } catch (err) {
         navigate("/");
