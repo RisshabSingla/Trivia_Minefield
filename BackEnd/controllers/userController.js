@@ -65,6 +65,7 @@ exports.getUser = async (req, res) => {
     } else {
       user = await User.findById(req.params.id);
     }
+    user.password = undefined;
     return res.status(200).json({
       status: "success",
       data: {

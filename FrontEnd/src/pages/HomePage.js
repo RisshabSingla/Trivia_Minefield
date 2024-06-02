@@ -30,8 +30,9 @@ function Login({ setOverlay, message, setMessage }) {
       .then((res) => {
         // console.log(res);
         // console.log(res.cookie);
-        console.log(res.data.token);
+        // console.log(res.data.token);
         document.cookie = `jwt=${res.data.token}`;
+        sessionStorage.setItem("userData", JSON.stringify(res.data.data.user));
         setMessage("Login Successful");
         setTimeout(() => {
           navigate("/dashboard");
@@ -152,6 +153,7 @@ function SignUp({ setOverlay, message, setMessage }) {
         // setOverlay("login");
         // navigate("/");
         document.cookie = `jwt=${res.data.token}`;
+        sessionStorage.setItem("userData", JSON.stringify(res.data.data.user));
         setMessage("SignUp Successful");
         setTimeout(() => {
           navigate("/dashboard");

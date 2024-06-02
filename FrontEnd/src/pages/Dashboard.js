@@ -40,7 +40,11 @@ function Dashboard() {
         navigate("/");
       }
     }
-    getData();
+    if (sessionStorage.getItem("userData") !== null) {
+      setUserSettings(JSON.parse(sessionStorage.getItem("userData")));
+    } else {
+      getData();
+    }
   }, [overlay]);
 
   useEffect(() => {

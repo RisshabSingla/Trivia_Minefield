@@ -94,7 +94,11 @@ function BuildQuiz() {
         navigate("/");
       }
     }
-    getData();
+    if (sessionStorage.getItem("userData") !== null) {
+      setUserSettings(JSON.parse(sessionStorage.getItem("userData")));
+    } else {
+      getData();
+    }
   }, []);
   return (
     <div className="h-full  overflow-auto">
