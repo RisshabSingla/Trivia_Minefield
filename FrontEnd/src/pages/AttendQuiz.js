@@ -339,6 +339,7 @@ function AttendQuiz() {
           }
         );
         setUserSettings(res.data.data.user);
+        sessionStorage.setItem("userData", JSON.stringify(res.data.data.user));
       } catch (err) {
         navigate("/");
       }

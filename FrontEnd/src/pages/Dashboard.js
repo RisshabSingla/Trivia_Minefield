@@ -33,18 +33,14 @@ function Dashboard() {
             withCredentials: true,
           }
         );
-
+        sessionStorage.setItem("userData", JSON.stringify(res.data.data.user));
         setUserSettings(res.data.data.user);
       } catch (err) {
         console.log(err);
         navigate("/");
       }
     }
-    if (sessionStorage.getItem("userData") !== null) {
-      setUserSettings(JSON.parse(sessionStorage.getItem("userData")));
-    } else {
-      getData();
-    }
+    getData();
   }, [overlay]);
 
   useEffect(() => {
